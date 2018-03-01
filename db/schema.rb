@@ -10,19 +10,53 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180225220119) do
+ActiveRecord::Schema.define(version: 20180301000333) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "events", force: :cascade do |t|
+    t.string "description"
+    t.string "location"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "playlists", force: :cascade do |t|
+    t.string "name"
+    t.integer "spotify_id"
+    t.string "uri"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tracks", force: :cascade do |t|
+    t.string "name"
+    t.string "artists"
+    t.string "uri"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "display_name"
     t.string "profile_img_url"
-    t.integer "spotify_id"
+    t.string "spotify_id"
     t.string "spotify_url"
     t.string "uri"
     t.string "access_token"
     t.string "refresh_token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "votes", force: :cascade do |t|
+    t.integer "track_id"
+    t.integer "user_id"
+    t.boolean "pending", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
