@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :rsvps
   resources :votes
   resources :tracks
   resources :playlists
