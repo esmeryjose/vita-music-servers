@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       # resources :tracks
       # resources :playlists
       resources :users do
-        resources :events, only:[:index,:create,:update]
+        resources :events, only:[:index,:create,:update,:destroy]
       end
       get 'search/index'
     end

@@ -18,11 +18,18 @@ class Api::V1::EventsController < ApplicationController
     end
 
     def update
-        @event.update(event_params)
+        @event.assign_attributes(event_params)
+        if @event.valid?
+            render json: @event
+        else
+            render_error(@event)
+        end
     end
 
     def destroy
-        
+        destroyed_event = EventSerializer.new(@event).attributes
+        @event.destroy
+        render json: destroyed_event
     end
 
     private

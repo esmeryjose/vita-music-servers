@@ -8,7 +8,8 @@ class Event < ApplicationRecord
     validate :no_repeat_name
 
     def no_repeat_name
-        if !self.admin.events.where(title: self.title).empty?
+        event = self.admin.events.where(title: self.title)
+        if !event.empty? && event.first.id != self.id
             self.errors.add(:title, "has to be unique")
         end
     end
