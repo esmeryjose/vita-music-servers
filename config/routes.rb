@@ -7,11 +7,13 @@ Rails.application.routes.draw do
       get 'auth', to: "sessions#create"
       post 'login', to: "users#create"
       get "sessions/current_user", to: "sessions#show"
-      resources :rsvps
-      resources :votes
-      resources :tracks
-      resources :playlists
-      resources :events
+      # resources :rsvps
+      # resources :votes
+      # resources :tracks
+      # resources :playlists
+      resources :users do
+        resources :events, only:[:index,:create,:update]
+      end
       get 'search/index'
     end
   end
