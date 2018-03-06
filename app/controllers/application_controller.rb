@@ -48,9 +48,13 @@ class ApplicationController < ActionController::API
         if my_user.access_token_expired?
             refresh_token = decode(my_user.refresh_token)
             token = refresh_token["token"]
-            access_token = SpotifyAdapter.refresh_access_token(token)
+            access_token = SpotifyApiAdapter.refresh_access_token(token)
             encodedAccess = issue_token({token: access_token})
             my_user.update(access_token: encodedAccess)
         end
+    end
+
+    def render_error(obj)
+        render json:{error: obj.errors.messages} , status: 404
     end
 end

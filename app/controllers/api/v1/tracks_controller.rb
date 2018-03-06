@@ -1,2 +1,2 @@
-class TracksController < ApplicationController
+class Api::V1::TracksController < ApplicationController
 end

@@ -1,2 +1,2 @@
-class RsvpsController < ApplicationController
+class Api::V1::RsvpsController < ApplicationController
 end
