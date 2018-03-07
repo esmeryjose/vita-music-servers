@@ -1,12 +1,12 @@
 class Api::V1::EventsController < ApplicationController
     before_action :get_user, only:[:index]
-    before_action :get_event, only:[:update,:destroy]
+    before_action :get_event, only:[:update,:destroy, :show]
 
     def index
         events = @user.events
         render json: events
     end
-    
+
     def create
         event = Event.new(event_params)
         if event.valid?
@@ -15,6 +15,10 @@ class Api::V1::EventsController < ApplicationController
         else
             render_error(event)
         end
+    end
+
+    def show
+        render json: @event
     end
 
     def update
