@@ -8,12 +8,15 @@ Rails.application.routes.draw do
       post 'login', to: "users#create"
       get "sessions/current_user", to: "sessions#show"
       # resources :rsvps
-      # resources :votes
-      # resources :tracks
-      # resources :playlists
+      resources :votes, only:[:create, :destroy]
       resources :users do
         resources :events, only:[:index,:create,:update,:destroy, :show]
       end
+
+      resources :playlists, only:[:show] do
+        resources :tracks, only:[:create]
+      end
+      
       get 'search/index'
     end
   end
