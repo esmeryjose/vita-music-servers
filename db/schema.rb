@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180305210903) do
+ActiveRecord::Schema.define(version: 20180307200539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,8 @@ ActiveRecord::Schema.define(version: 20180305210903) do
     t.string "uri"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "playlist_id"
+    t.boolean "pending", default: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -65,10 +67,8 @@ ActiveRecord::Schema.define(version: 20180305210903) do
   create_table "votes", force: :cascade do |t|
     t.integer "track_id"
     t.integer "user_id"
-    t.boolean "pending", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "count", default: 0
   end
 
 end
