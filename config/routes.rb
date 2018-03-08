@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       get 'auth', to: "sessions#create"
       post 'login', to: "users#create"
       get "sessions/current_user", to: "sessions#show"
-      # resources :rsvps
+      resources :rsvps, only:[:create,:destroy]
       resources :votes, only:[:create, :destroy]
       resources :users do
         resources :events, only:[:index,:create,:update,:destroy, :show]
