@@ -1,4 +1,2 @@
-class Api::V1::SearchController < ApplicationController
-  def index
-  end
+class SearchController < ApplicationController
 end

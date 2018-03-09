@@ -11,7 +11,7 @@ class Api::V1::SessionsController < ApplicationController
       client_id: ENV["CLIENT_ID"],
       response_type: "code",
       redirect_uri: ENV["REDIRECT_URI"],
-      scope: "playlist-modify-private",
+      scope: "playlist-modify-private playlist-read-private",
       show_dialog: true
     }
 

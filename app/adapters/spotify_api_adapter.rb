@@ -35,7 +35,9 @@ class SpotifyApiAdapter
         JSON.parse(auth_response.body)
     end
 
-    def self.create_playlist(user_id,access_token)
+    def self.create_playlist(user_id,playlist_name,access_token)
+
+        url = "https://api.spotify.com/v1/users/#{user_id}/playlists"
 
         header = {
             Authorization: "Bearer #{access_token}",
@@ -43,11 +45,12 @@ class SpotifyApiAdapter
         }
 
         body= {
-            name:"Test",
+            name: "#{playlist_name}-playlist",
             public: false
         }
 
-        auth_response = RestClient.post(URLS[:auth], body, header)
+        binding.pry
+        auth_response = RestClient.post(url, body.to_json, header)
         JSON.parse(auth_response.body)
     end
 

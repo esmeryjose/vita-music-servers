@@ -1,0 +1,2 @@
+class SpotifyRecommendationController < ApplicationController
+end
