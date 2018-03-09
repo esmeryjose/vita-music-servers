@@ -2,7 +2,7 @@ class SpotifyApiAdapter
     URLS={
         auth:"https://accounts.spotify.com/api/token",
         me:"https://api.spotify.com/v1/me",
-        create_playlist:"https://api.spotify.com/v1/users/{user_id}/playlists",
+        users:"https://api.spotify.com/v1/users",
     }
 
     def self.body_params
@@ -37,19 +37,18 @@ class SpotifyApiAdapter
 
     def self.create_playlist(user_id,playlist_name,access_token)
 
-        url = "https://api.spotify.com/v1/users/#{user_id}/playlists"
+        url = "#{URLS[:users]}/#{user_id}/playlists"
 
         header = {
-            Authorization: "Bearer #{access_token}",
+            "Authorization": "Bearer #{access_token["token"]}",
             "Content-Type": "application/json"
         }
 
         body= {
-            name: "#{playlist_name}-playlist",
-            public: false
+            "name": "#{playlist_name}-playlist",
+            "public": false
         }
 
-        binding.pry
         auth_response = RestClient.post(url, body.to_json, header)
         JSON.parse(auth_response.body)
     end
@@ -57,7 +56,7 @@ class SpotifyApiAdapter
     def self.getUserData(access_token)
         
         header = {
-            Authorization: "Bearer #{access_token}"
+            "Authorization": "Bearer #{access_token}"
         }
 
         user_response = RestClient.get(URLS[:me], header)

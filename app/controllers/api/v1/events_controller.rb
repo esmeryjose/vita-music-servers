@@ -14,8 +14,9 @@ class Api::V1::EventsController < ApplicationController
             event_title = event.title
             encoded = my_user.access_token
             decoded = decode(encoded)
-            SpotifyApiAdapter.create_playlist(spotify_id, event_title, decoded)
-            # event.save
+            playlist_response = SpotifyApiAdapter.create_playlist(spotify_id, event_title, decoded)
+            event.playlist = Playlist.persist_playlist(playlist_response)
+            event.save
             render json: event
         else
             render_error(event)
