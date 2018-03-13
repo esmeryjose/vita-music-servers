@@ -5,6 +5,10 @@ class Playlist < ApplicationRecord
     has_many :pending_tracks,->{where(pending: true)}, class_name: :Track
     has_many :added_tracks,->{where(pending: false)}, class_name: :Track
 
+    def tracks_spotify_ids
+        tracks.pluck(:spotify_id)
+    end
+
     def self.persist_playlist(playlist_response)
         parsed_playlist = parse_playlist(playlist_response)
         new(parsed_playlist)

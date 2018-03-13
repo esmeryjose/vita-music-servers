@@ -1,8 +1,10 @@
 class SpotifyApiAdapter
     URLS={
-        auth:"https://accounts.spotify.com/api/token",
-        me:"https://api.spotify.com/v1/me",
-        users:"https://api.spotify.com/v1/users",
+        "auth" => "https://accounts.spotify.com/api/token",
+        "me" => "https://api.spotify.com/v1/me",
+        "users" => "https://api.spotify.com/v1/users",
+        "s_track" => "https://api.spotify.com/v1/search?type=track&q=",
+        "r_tracks" => "https://api.spotify.com/v1/recommendations?seed_tracks="
     }
 
     def self.body_params
@@ -31,19 +33,17 @@ class SpotifyApiAdapter
     end
     
     def self.authorize(body)
-        auth_response = RestClient.post(URLS[:auth], body)
+        auth_response = RestClient.post(URLS["auth"], body)
         JSON.parse(auth_response.body)
     end
 
     def self.create_playlist(user_id,playlist_name,access_token)
 
-        url = "#{URLS[:users]}/#{user_id}/playlists"
-
+        url = "#{URLS["users"]}/#{user_id}/playlists"
         header = {
             "Authorization": "Bearer #{access_token["token"]}",
             "Content-Type": "application/json"
         }
-
         body= {
             "name": "#{playlist_name}-playlist",
             "public": false
@@ -53,13 +53,47 @@ class SpotifyApiAdapter
         JSON.parse(auth_response.body)
     end
 
+    def self.add_track_to_playlist(user_id,playlist_id,track_uri,access_token)
+        
+        url = "#{URLS["users"]}/#{user_id}/playlists/#{playlist_id}/tracks"
+        header = {
+            "Authorization": "Bearer #{access_token["token"]}",
+            "Content-Type": "application/json"
+        }
+        body = {
+            "uris": [track_uri]
+        }
+        
+        RestClient.post(url, body.to_json, header)
+    end
+
+    def self.recommended_tracks(track_ids)
+        
+        header = {
+            "Authorization": "Bearer #{access_token["token"]}"
+        }
+        url = "#{URLS["r_tracks"]}#{track_ids}"
+        
+        recommended_tracks_response = RestClient.get(url, header)
+        JSON.parse(recommended_playlist_response.body)
+    end
+
+    def self.search_tracks(track_name, access_token)
+        header = {
+            "Authorization": "Bearer #{access_token["token"]}"
+        }
+        url = "#{URLS["s_track"]}#{track_name}"
+
+        user_response = RestClient.get(url, header)
+        JSON.parse(user_response)
+    end
+
     def self.getUserData(access_token)
         
         header = {
             "Authorization": "Bearer #{access_token}"
         }
-
-        user_response = RestClient.get(URLS[:me], header)
+        user_response = RestClient.get(URLS["me"], header)
 
         JSON.parse(user_response.body)
     end

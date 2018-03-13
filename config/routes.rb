@@ -17,6 +17,9 @@ Rails.application.routes.draw do
         resources :tracks, only:[:create]
       end
       
+      get "recommendations/artists", to: "spotify_search#artist"
+      get "recommendations/tracks", to: "spotify_search#tracks"
+      get "search/tracks", to: "spotify_search#tracks"
       get 'search/index'
     end
   end
