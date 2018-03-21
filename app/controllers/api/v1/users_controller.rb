@@ -16,7 +16,15 @@ class Api::V1::UsersController < ApplicationController
   
         render json: user_with_token(user)
     end
-  
+    
+    def show
+        @user = User.find_by(id: params[:id])
+        if @user
+            render json: @user
+        else
+            render json: {error: "This user does not exist"}
+        end
+    end
   
     private
   

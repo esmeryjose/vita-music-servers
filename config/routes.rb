@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       get "sessions/current_user", to: "sessions#show"
       resources :rsvps, only:[:create,:destroy]
       resources :votes, only:[:create, :destroy]
-      resources :users do
+      resources :users, only:[:show] do
         resources :events, only:[:index,:create,:update,:destroy, :show]
       end
 
