@@ -4,8 +4,10 @@ class Api::V1::TracksController < ApplicationController
         track = Track.new(track_params)
         # binding.pry
         if track.valid?
-            spotify_id = my_user.spotify_id
-            encoded = my_user.access_token
+            user = @playlist.event.admin
+            check_for_refresh(user) if user != my_user
+            spotify_id = user.spotify_id
+            encoded = user.access_token
             decoded = decode(encoded)
             SpotifyApiAdapter.add_track_to_playlist(spotify_id, @playlist.spotify_id, track.uri, decoded)
             track.save

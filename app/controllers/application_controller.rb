@@ -44,13 +44,13 @@ class ApplicationController < ActionController::API
         (render json: {message: "Not welcome" }, status: 401)
     end
   
-    def check_for_refresh(my_user)
-        if my_user.access_token_expired?
-            refresh_token = decode(my_user.refresh_token)
+    def check_for_refresh(user)
+        if user.access_token_expired?
+            refresh_token = decode(user.refresh_token)
             token = refresh_token["token"]
             access_token = SpotifyApiAdapter.refresh_access_token(token)
             encodedAccess = issue_token({token: access_token})
-            my_user.update(access_token: encodedAccess)
+            user.update(access_token: encodedAccess)
         end
     end
 
