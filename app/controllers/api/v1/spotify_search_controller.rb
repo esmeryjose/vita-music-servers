@@ -19,8 +19,8 @@ class Api::V1::SpotifySearchController < ApplicationController
 
     def parse_tracks(spotify_response)
         spotify_response["tracks"]["items"].map do |track|
+            # binding.pry
             {
-                name: track["name"],
                 uri: track["uri"],
                 spotify_id: track["id"],
 

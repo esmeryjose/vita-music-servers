@@ -29,7 +29,7 @@ class ApplicationController < ActionController::API
                 return nil
             end
             if decoded_token["user_id"]
-                @current_user ||= User.find(decoded_token["user_id"])
+                @current_user ||= ::User.find(decoded_token["user_id"])
             end
         end
     end

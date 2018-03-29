@@ -1,3 +1,3 @@
 class PlaylistPendingTracksSerializer < ActiveModel::Serializer
-  attributes :id, :voters
+  attributes :id, :spotify_id, :uri, :voters
 end
